@@ -1,6 +1,12 @@
-import { Button } from 'react-bootstrap';
+
 import './App.css';
-function App() {
+import { Routes,Route } from 'react-router-dom';
+import Home from './componets/Home'
+import About from './componets/About'
+import Store from './componets/Store'
+import Navbar from './componets/navbar/Navbar';
+import { Button } from 'react-bootstrap';
+
 const productsArr = [
 
   {
@@ -44,20 +50,31 @@ const productsArr = [
   }
   
   ]
+function App() {
+
   
-    
   return (
-    <>
-      <ul>{productsArr.map((item,i)=>(
-        <li key={i}>
-         <h3>{item.title}</h3>
-         <h3>${item.price}</h3>
-        <img src={item.imageUrl} ></img>
-        <Button>Add To Cart</Button>
-        </li>
-      ))}</ul>
+    <>   
+   <Navbar />
+      <Routes>
+        <Route path='/about' element={ <About></About>}> </Route> 
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/store" element={<Store />}></Route>
+       </Routes>
+
+       <ul>
+       {productsArr.map((item)=>(
+          <li>
+            <h1>{item.title}</h1>
+            {item.price}
+            <img src={item.imageUrl}></img>
+            <Button>Add To Cart</Button>
+          </li>
+       ))}
+       </ul>
     </>
   );
+ 
 }
 
 export default App;
