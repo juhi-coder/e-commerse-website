@@ -1,9 +1,7 @@
 
 import './App.css';
 import { Routes,Route } from 'react-router-dom';
-import Home from './componets/Home'
-import About from './componets/About'
-import Store from './componets/Store'
+import About from './Pages/About';
 import Navbar from './componets/navbar/Navbar';
 import { Button } from 'react-bootstrap';
 
@@ -58,8 +56,8 @@ function App() {
    <Navbar />
       <Routes>
         <Route path='/about' element={ <About></About>}> </Route> 
-        <Route path="/home" element={<Home />}></Route>
-        <Route path="/store" element={<Store />}></Route>
+        {/* <Route path="/home" element={<Home />}></Route>
+        <Route path="/store" element={<Store />}></Route> */}
        </Routes>
 
        <ul>
