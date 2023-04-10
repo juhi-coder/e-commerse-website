@@ -6,13 +6,13 @@ import Footer from '../components/Footer';
 const About = () => {
   return (
     <div>
-
+      
       <div className="title">
               <h1>The Generics</h1>
             </div>
       <h1>About</h1>
       <div className="content">
-        <img className="about-image" src= {design} alt="design"  />
+        <img className="about-image" src={design} alt="design"  />
         <p>
           Lorem ipsum carrots enhanced rebates. Excellent sayings of a man of
           sorrows, hates no prosecutors will unfold in the enduring of which

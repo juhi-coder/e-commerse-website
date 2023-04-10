@@ -1,47 +1,56 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import CartContext from "./cart-context";
+
 const CartProvider = (props) => {
-  const [cart, setCart] = useState([]);
-  const addItemToCartHandler = (item, index) => {
-    console.log(item);
-    let isPresent = false;
-    cart.forEach((product) => {
-      if (item.title === product.title) {
-        isPresent = true;
+  const [addItems, setAddItems] = useState([]);
+  const [crudlist, setCrudlist] = useState([]);
+  const addItemToCart = (item) => {
+    let cartItems = [...addItems];
+    let hasItem = false;
+    cartItems.forEach((product) => {
+      if (product.id === item.id) {
+        hasItem = true;
+        product.quantity = Number(product.quantity) + Number(item.quantity);
       }
     });
-    if (isPresent) {
-      return;
+    if (hasItem) {
+      setAddItems(cartItems);
+    } else {
+      setAddItems((prevItem) => {
+        return [...prevItem, item];
+      });
     }
-    setCart([...cart, item]);
   };
-  const  IncreaseAndDecrease = (item,d) => {
-    let ind = -1;
-    cart.forEach((data,index)=>{
-        if(data.title===item.title){
-            ind =index
-        }
-    })
-    const tempArr = cart;
-    tempArr[ind].amount = Number(tempArr[ind].amount) + d;
-    if(tempArr[ind].amount===0){
-        tempArr[ind].amount =1;
-    }
-    setCart([...tempArr])
+  const removeItemFromCart = (item) => {
+    let cartItems = [...addItems];
+    cartItems.forEach((product, index) => {
+      if (product.id === item.id && product.quantity <= 1) {
+        cartItems.splice(index, 1);
+        setAddItems(cartItems);
+      }
+      if (product.id === item.id && product.quantity > 1) {
+        product.quantity = Number(product.quantity) - 1;
+        setAddItems(cartItems);
+      }
+    });
+  };
+  const crudlistHandler = (items) => {
+    setCrudlist(items);
   };
 
-  const cartcontext = {
-    items: cart,
-    incAndDecFun :IncreaseAndDecrease,
-    totalAmount: cart.length,
-    addItem: addItemToCartHandler,
-    removeItem: setCart,
+  const cartContext = {
+    items: addItems,
+    addItem: addItemToCart,
+    removeItem: removeItemFromCart,
+    crudlist: crudlistHandler,
+    cruditems: crudlist,
   };
 
   return (
-    <CartContext.Provider value={cartcontext}>
+    <CartContext.Provider value={cartContext}>
       {props.children}
     </CartContext.Provider>
   );
 };
+
 export default CartProvider;
